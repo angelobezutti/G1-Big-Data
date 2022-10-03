@@ -1,0 +1,19 @@
+CREATE OR REPLACE FUNCTION ingressos_disponiveis(INTEGER) 
+RETURNS VARCHAR AS $$
+DECLARE
+	sessao sessao;
+BEGIN
+	SELECT * FROM sessao WHERE cod_sessao = $1 INTO sessao;
+	IF NOT FOUND THEN
+		RAISE EXCEPTION 'Sessão não existe!';
+	ELSEIF sessao.ingressos_disponiveis > 0 THEN
+		RETURN 'Há Ingressos Disponíveis';
+	ELSE
+		RETURN 'Não há Ingressos Disponíveis';
+	END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+--SELECT * FROM sessao
+
+--SELECT ingressos_disponiveis(1)
