@@ -1,0 +1,8 @@
+CREATE TABLE HISTORICO_RESERVA (
+	cod_historico_reserva INT NOT NULL PRIMARY KEY,
+	cod_pedido INT NOT NULL,
+	cod_espetaculo INT NOT NULL,
+	cod_sessao INT NOT NULL,
+	cadeira VARCHAR(10) NOT NULL,
+	data_operacao TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
+);
