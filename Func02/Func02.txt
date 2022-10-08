@@ -1,0 +1,19 @@
+CREATE OR REPLACE FUNCTION reserva_assentos(cod_reserva_param integer) 
+returns INTEGER AS
+$$
+DECLARE
+	reserva_disponivel integer;
+BEGIN
+      SELECT r.cadeira INTO reserva_disponivel 
+      FROM reserva r WHERE r.cod_reserva = cod_reserva_param;
+	  
+      IF reserva_disponivel IS NULL THEN
+        RAISE EXCEPTION 'Não existem reservas disponíveis para esse cliente';
+      ELSE 
+        RETURN reserva_disponivel;      
+	END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+--SELECT reserva_assentos(7);
+--Júlia Bianchi
