@@ -4,11 +4,14 @@ $$
 DECLARE
 	reserva_disponivel integer;
 BEGIN
-      SELECT r.cadeira INTO reserva_disponivel 
-      FROM reserva r WHERE r.cod_reserva = cod_reserva_param;
+
+      SELECT r.cadeira 
+	  INTO reserva_disponivel 
+      FROM reserva r 
+	  WHERE r.cod_reserva = cod_reserva_param;
 	  
       IF reserva_disponivel IS NULL THEN
-        RAISE EXCEPTION 'Não existem reservas disponíveis para esse cliente';
+        RAISE EXCEPTION 'Não existem reservas disponíveis!';
       ELSE 
         RETURN reserva_disponivel;      
 	END IF;
