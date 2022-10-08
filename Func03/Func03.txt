@@ -1,0 +1,27 @@
+CREATE OR REPLACE FUNCTION clientes_pedidos(id_cliente integer) 
+returns integer AS
+$$
+    DECLARE
+    pedidos integer;
+
+    BEGIN
+
+      select count(pe.cod_pedido) INTO pedidos
+      from pedido pe
+      inner join cliente cli
+      on pe.cod_pedido = cli.cod_cliente
+      where cli.cod_cliente = id_cliente;
+
+      if pedidos IS NULL or pedidos = 0 THEN
+        RAISE EXCEPTION 'Não existem pedidos para esse cliente';
+
+      else 
+        return pedidos;
+      END IF;
+
+    END;
+    $$ LANGUAGE plpgsql;
+
+select clientes_pedidos(1);
+
+-- Ricardo Castelani
