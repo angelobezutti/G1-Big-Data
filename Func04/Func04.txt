@@ -1,0 +1,30 @@
+CREATE OR REPLACE FUNCTION f_reservas_espetaculo(id_espetaculo integer) 
+returns integer AS
+$$
+    DECLARE
+    qntd_reserva integer;
+    
+    
+    BEGIN
+  
+      select count(r.cod_reserva) INTO qntd_reserva
+      from reserva r
+      inner join espetaculo e
+      on r.cod_espetaculo = e.cod_espetaculo
+      where r.cod_espetaculo = id_espetaculo;
+     
+      if qntd_reserva IS NULL or qntd_reserva = 0 THEN
+        RAISE EXCEPTION 'Não existem reservas para esse espetáculo';
+       
+      else 
+        return qntd_reserva;
+      END IF;  
+  
+    END;
+    $$ LANGUAGE plpgsql;
+    
+set search_path to trabalho_g1;
+
+select f_reservas_espetaculo(4);
+
+--Ueslei Silva Dalmina
