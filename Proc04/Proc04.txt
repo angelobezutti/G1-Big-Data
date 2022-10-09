@@ -1,0 +1,32 @@
+set search_path to trabalho_g1;
+CREATE OR REPLACE PROCEDURE criar_reserva (
+    cod_pedido IN INT,
+    cod_espetaculo_parametro IN INT, 
+    cod_sessao_parametro IN INT, 
+    cadeira IN VARCHAR(10)) AS $$
+    
+DECLARE
+    espetaculo espetaculo;
+    sessao sessao;
+BEGIN
+    SELECT * FROM espetaculo WHERE cod_espetaculo = cod_espetaculo_parametro INTO espetaculo;
+        IF NOT FOUND THEN
+            RAISE EXCEPTION 'Espetáculo Inexistente, troque o parâmetro';
+        END IF;
+        
+    SELECT * FROM sessao WHERE cod_sessao = cod_sessao_parametro INTO sessao;
+        IF NOT FOUND THEN
+            RAISE EXCEPTION 'Sessão Inválida, troque o parâmentro';
+        END IF;
+    
+    INSERT INTO reserva (cod_pedido, cod_espetaculo, cod_sessao, cadeira)
+    VALUES (cod_pedido, cod_espetaculo_parametro, cod_sessao_parametro, cadeira);
+    
+    END;
+    $$ language plpgsql;
+    
+CALL criar_reserva(1,1,1,'pista');
+select * from reserva;
+drop procedure criar_reserva;
+
+--Ueslei Silva Dalmina
