@@ -1,0 +1,22 @@
+-- Questão resolvida por: Angelo Antonio Bezutti
+
+set search_path to trabalho_g1
+
+CREATE OR REPLACE FUNCTION historico_delete_reserva() RETURNS TRIGGER AS $$
+BEGIN
+   INSERT INTO historico_reserva (cod_historico_reserva, cod_pedido, cod_espetaculo, cod_sessao, cadeira)
+   VALUES(OLD.cod_reserva, OLD.cod_pedido, OLD.cod_espetaculo, OLD.cod_sessao, OLD.cadeira);
+   RETURN OLD;
+END;
+$$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER trigger_historico_delete_reserva
+BEFORE DELETE ON reserva
+FOR EACH ROW
+EXECUTE PROCEDURE historico_delete_reserva();
+
+DELETE FROM reserva WHERE cod_reserva = 7;
+
+--SELECT * FROM reserva;
+--SELECT * FROM historico_reserva;

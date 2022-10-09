@@ -1,19 +1,22 @@
-CREATE OR REPLACE FUNCTION ingressos_disponiveis(INTEGER) 
-RETURNS VARCHAR AS $$
+-- Questão resolvida por: Angelo Antonio Bezutti
+
+set search_path to trabalho_g1;
+
+CREATE OR REPLACE FUNCTION ingressos_disponiveis(cod_sessao_parametro INTEGER) 
+RETURNS INTEGER AS $$
 DECLARE
-	sessao sessao;
+	ingressos_disponiveis_final INT;
 BEGIN
-	SELECT * FROM sessao WHERE cod_sessao = $1 INTO sessao;
+	SELECT ingressos_disponiveis FROM sessao WHERE cod_sessao = cod_sessao_parametro INTO ingressos_disponiveis_final;
 	IF NOT FOUND THEN
 		RAISE EXCEPTION 'Sessão não existe!';
-	ELSEIF sessao.ingressos_disponiveis > 0 THEN
-		RETURN 'Há Ingressos Disponíveis';
 	ELSE
-		RETURN 'Não há Ingressos Disponíveis';
+		RETURN ingressos_disponiveis_final;
 	END IF;
 END;
 $$ LANGUAGE plpgsql;
 
---SELECT * FROM sessao
+--SELECT * FROM sessao;
 
---SELECT ingressos_disponiveis(1)
+SELECT ingressos_disponiveis(1)
+

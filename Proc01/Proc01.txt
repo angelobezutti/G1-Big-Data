@@ -1,3 +1,7 @@
+-- Questão resolvida por: Angelo Antonio Bezutti
+
+set search_path to trabalho_g1
+
 CREATE OR REPLACE PROCEDURE cria_sessoes(
 	cod_espetaculo_parametro IN INT, 
 	inicio IN TIMESTAMP WITHOUT TIME ZONE,
@@ -5,25 +9,31 @@ CREATE OR REPLACE PROCEDURE cria_sessoes(
 	duracao IN INT, 
 	preco IN NUMERIC) AS $$
 DECLARE
-	espetaculo espetaculo;
-    	periodicidade periodicidade;
+	cod_espetaculo_final INT;
+    	cod_periodicidade_final INT;
 BEGIN
-    	SELECT * FROM espetaculo WHERE cod_espetaculo = cod_espetaculo_parametro INTO espetaculo;
-	IF NOT FOUND THEN
-		RAISE EXCEPTION 'Espetaculo não existe, por favor insira um válido!';
-	END IF;
-	
-	SELECT * FROM periodicidade WHERE cod_periodicidade = cod_periodicidade_parametro INTO periodicidade;
+	SELECT cod_periodicidade 
+	FROM periodicidade 
+	WHERE cod_periodicidade = cod_periodicidade_parametro INTO cod_periodicidade_final;
 	IF NOT FOUND THEN
 		RAISE EXCEPTION 'Periodicidade não existe, por favor insira uma válida!';
 	END IF;
 	
-	INSERT INTO sessao (cod_espetaculo, data_hora_inicio, duracao, preco, cod_periodicidade)
-	VALUES (cod_espetaculo_parametro, inicio, duracao, preco, cod_periodicidade_parametro);
+    	SELECT cod_espetaculo 
+	FROM espetaculo 
+	WHERE cod_espetaculo = cod_espetaculo_parametro INTO cod_espetaculo_final;
+	IF NOT FOUND THEN
+		RAISE EXCEPTION 'Espetaculo não existe, por favor insira um válido!';
+	END IF;
+	
+	INSERT INTO sessao (cod_espetaculo, data_hora_inicio, cod_periodicidade, duracao, preco)
+	VALUES (cod_espetaculo_final, inicio, cod_periodicidade_final, duracao, preco);
 END;
 $$
 LANGUAGE plpgsql;
 
 --SELECT * FROM sessao
---set search_path to trabalho_g1
---CALL cria_sessoes(3, '2023-11-23', 1, 40, 10.00);
+
+CALL cria_sessoes(2, '2035-11-13', 2, 40, 500.00);
+
+
