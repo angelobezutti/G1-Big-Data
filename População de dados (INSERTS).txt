@@ -1,0 +1,84 @@
+-- Scrip de dados TOTALMENTE FICTÍCIOS
+
+set search_path to trabalho_g1;
+
+INSERT INTO cidade(nome, uf)
+VALUES ('Passo Fundo', 'RS');
+INSERT INTO cidade(nome, uf)
+VALUES ('São Paulo', 'SP');
+INSERT INTO cidade(nome, uf)
+VALUES ('Porto Alegre', 'RS');
+INSERT INTO cidade(nome, uf)
+VALUES ('Fortaleza', 'CE');
+
+INSERT INTO cliente(nome, sobrenome, cpf, endereco_entrega, cod_cidade, status)
+VALUES ('João', 'Silva', '111-111-111-11', 'AV.Brasil', 1, 'A');
+INSERT INTO cliente(nome, sobrenome, cpf, endereco_entrega, cod_cidade, status)
+VALUES ('Pedro', 'Oliveira', '222-222-222-22', 'Rua Tiradentes', 3, 'A');
+INSERT INTO cliente(nome, sobrenome, cpf, endereco_entrega, cod_cidade, status)
+VALUES ('Cleber', 'Junior', '333-333-333-33', 'Biqueira 12', 2, 'A');
+
+INSERT INTO periodicidade(descricao)
+VALUES ('Diária');
+INSERT INTO periodicidade(descricao)
+VALUES ('Semanal');
+INSERT INTO periodicidade(descricao)
+VALUES ('Mensal');
+INSERT INTO periodicidade(descricao)
+VALUES ('Apenas uma vez');
+
+INSERT INTO tipo_espetaculo(descricao)
+VALUES ('Show Nacional');
+INSERT INTO tipo_espetaculo(descricao)
+VALUES ('Filme');
+INSERT INTO tipo_espetaculo(descricao)
+VALUES ('Teatro');
+INSERT INTO tipo_espetaculo(descricao)
+VALUES ('Show Internacional');
+
+INSERT INTO estabelecimento(nome, endereco, tem_estacionamento, cod_tipo_espetaculo, cod_cidade)
+VALUES ('Cinema', 'Avenida Brasil', false, 1, 2);
+INSERT INTO estabelecimento(nome, endereco, tem_estacionamento, cod_tipo_espetaculo, cod_cidade)
+VALUES ('Estadio', 'Centro', true, 3, 3);
+INSERT INTO estabelecimento(nome, endereco, tem_estacionamento, cod_tipo_espetaculo, cod_cidade)
+VALUES ('Shopping', 'Rua Alta', true, 2, 4);
+INSERT INTO estabelecimento(nome, endereco, tem_estacionamento, cod_tipo_espetaculo, cod_cidade)
+VALUES ('Bar do Zé', 'Perto da IMED' false, 3, 1);
+
+INSERT INTO espetaculo(nome, descricao, cod_estabelecimento)
+VALUES ('ERA UMA VEZ', 'História para crianças', 1);
+INSERT INTO espetaculo(nome, descricao, cod_estabelecimento)
+VALUES ('Avatar 2', 'Filme lançamento', 1);
+INSERT INTO espetaculo(nome, descricao, cod_estabelecimento)
+VALUES ('Henrique e Juliano', 'Show Músical Nacional', 3);
+INSERT INTO espetaculo(nome, descricao, cod_estabelecimento)
+VALUES ('Tourada', 'Show com touros', 2);
+INSERT INTO espetaculo(nome, descricao, cod_estabelecimento)
+VALUES ('Jumanji', 'Filme', 1);
+
+INSERT INTO sessao(cod_espetaculo, data_hora_inicio, duracao, total_ingressos, ingressos_disponiveis, preco, cod_periodicidade)
+VALUES (4, '2023-12-04', 50, 50, 10, 500.00, 4);
+INSERT INTO sessao(cod_espetaculo, data_hora_inicio, duracao, total_ingressos, ingressos_disponiveis, preco, cod_periodicidade)
+VALUES (3, '2022-12-06', 200, 30, 20, 100.00, 3);
+INSERT INTO sessao(cod_espetaculo, data_hora_inicio, duracao, total_ingressos, ingressos_disponiveis, preco, cod_periodicidade)
+VALUES (1, '2023-11-23', 400, 40, 5, 700.00, 1);
+INSERT INTO sessao(cod_espetaculo, data_hora_inicio, duracao, total_ingressos, ingressos_disponiveis, preco, cod_periodicidade)
+VALUES (2, '2022-12-13', 100, 20, 0, 50.00, 2);
+
+INSERT INTO pedido(cod_cliente, data_pedido, status)
+VALUES (1, '2022-10-08', 'A');
+INSERT INTO pedido(cod_cliente, data_pedido, status)
+VALUES (2, '2022-10-08', 'A');
+INSERT INTO pedido(cod_cliente, data_pedido, status)
+VALUES (3, '2022-10-08', 'A');
+
+INSERT INTO reserva(cadeira, cod_pedido, cod_sessao, cod_espetaculo)
+VALUES ('Número 1', 1, 4, 2);
+INSERT INTO reserva(cadeira, cod_pedido, cod_sessao, cod_espetaculo)
+VALUES ('Número 2', 3, 2, 3);
+INSERT INTO reserva(cadeira, cod_pedido, cod_sessao, cod_espetaculo)
+VALUES ('Número 3', 1, 4, 1);
+INSERT INTO reserva(cadeira, cod_pedido, cod_sessao, cod_espetaculo)
+VALUES ('Número 4', 2, 3, 4);
+INSERT INTO reserva(cadeira, cod_pedido, cod_sessao, cod_espetaculo)
+VALUES ('Número 5', 3, 1, 5);
