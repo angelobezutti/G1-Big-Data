@@ -27,7 +27,7 @@ AFTER INSERT ON reserva
 FOR EACH ROW
 EXECUTE PROCEDURE atualizar_ingressos_disponiveis();
 
-INSERT INTO reserva (cod_pedido, cod_espetaculo, cod_sessao,cadeira) VALUES (3,10,9,25);
+INSERT INTO reserva (cod_pedido, cod_espetaculo, cod_sessao,cadeira) VALUES (3,10,9,8);
 
 -- SELECT * FROM reserva;
 -- SELECT * FROM sessao;
