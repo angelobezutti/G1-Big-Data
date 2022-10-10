@@ -1,0 +1,21 @@
+SET search_path TO trabalho_g1
+
+CREATE OR REPLACE PROCEDURE define_ingressos_total(
+	cod_sessao_param IN INT,
+	total_ingressos_param IN INT
+) AS $$
+BEGIN
+	IF total_ingressos_param < 0 THEN
+		RAISE EXCEPTION 'Valor inválido';
+	END IF;
+
+	UPDATE sessao 
+	SET total_ingressos = total_ingressos_param
+	WHERE cod_sessao = cod_sessao_param;
+END;
+$$
+LANGUAGE plpgsql;
+
+CALL define_ingressos_total(1,200);
+
+-- Julia Bianchi
