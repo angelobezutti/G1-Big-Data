@@ -1,0 +1,25 @@
+set search_path to trabalho_g1
+
+CREATE OR REPLACE FUNCTION excluir_pedido() RETURNS TRIGGER AS $$
+
+BEGIN
+    update pedido
+    set (status, data_cancelamento) = ('I', now())
+    where cod_pedido = old.cod_pedido;
+    delete from reserva r
+    where r.cod_pedido = old.cod_pedido;
+    RETURN NULL;
+END;
+$$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER trigger_excluir_pedido
+BEFORE DELETE ON pedido
+FOR EACH ROW
+EXECUTE PROCEDURE excluir_pedido();
+
+DELETE FROM pedido WHERE cod_pedido = 2;
+SELECT * FROM reserva;
+SELECT * FROM pedido;
+
+--Ueslei Silva Dalmina
