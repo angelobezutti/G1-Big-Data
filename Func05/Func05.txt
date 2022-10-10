@@ -1,0 +1,25 @@
+SET search_path TO trabalho_g1;
+
+CREATE OR REPLACE FUNCTION quantidade_clientes(cod_espetaculo_param integer) 
+returns INTEGER AS
+$$
+DECLARE
+    qntd_clientes integer;
+BEGIN
+
+      SELECT count(c.cod_cliente) 
+      INTO qntd_clientes 
+      FROM trabalho_g1.espetaculo e, trabalho_g1.estabelecimento es, trabalho_g1.cliente c 
+      WHERE e.cod_espetaculo = cod_espetaculo_param AND e.cod_estabelecimento = es.cod_estabelecimento AND es.cod_cidade = c.cod_cidade;
+
+      IF NOT FOUND THEN
+        RAISE EXCEPTION 'Código do espetáculo inválido ou inexistente!';
+      ELSE
+        RETURN qntd_clientes;
+    END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT quantidade_clientes(5); 
+
+--TAILA FOLLE
