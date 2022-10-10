@@ -1,0 +1,32 @@
+CREATE TRIGGER trigger_inserir_registro
+BEFORE INSERT ON reserva
+FOR EACH ROW
+EXECUTE PROCEDURE ingressos_disponiveis_existentes();
+
+
+CREATE OR REPLACE FUNCTION ingressos_disponiveis_existentes() 
+RETURNS TRIGGER AS
+$$
+DECLARE
+    qntd_ingressos_disponiveis INT;
+BEGIN
+
+     SELECT ingressos_disponiveis
+     INTO qntd_ingressos_disponiveis
+     FROM sessao s 
+     WHERE s.cod_sessao = NEW.cod_sessao;
+
+      IF qntd_ingressos_disponiveis <= 0 THEN
+        RAISE EXCEPTION 'Ingressos indisponíveis!';
+      ELSE
+        RETURN NULL;
+    END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+INSERT INTO reserva (cod_pedido, cod_espetaculo, cod_sessao,cadeira) VALUES (1,1,15,'cadeira');
+INSERT INTO trabalho_g1.reserva (cod_pedido, cod_espetaculo, cod_sessao,cadeira) VALUES (1,12,5,25);
+
+--SELECT * FROM reserva;
+
+--TAILA FOLLE
