@@ -1,0 +1,32 @@
+CREATE TRIGGER trigger_excluir_cliente
+BEFORE DELETE ON cliente
+FOR EACH ROW
+EXECUTE PROCEDURE atualizar_clientes();
+
+
+CREATE OR REPLACE FUNCTION atualizar_clientes() 
+RETURNS TRIGGER AS
+$$
+DECLARE
+    cliente_atualizado INT;
+BEGIN
+
+     SELECT COUNT(p.cod_pedido) 
+     INTO cliente_atualizado 
+     FROM pedido p
+     WHERE p.cod_cliente = OLD.cod_cliente AND p.status = 'A';
+
+     IF cliente_atualizado > 0 THEN
+         RAISE EXCEPTION 'Cliente possui pedidos ativos, não pode ser excluído!';
+
+    END IF;
+    RETURN NULL;
+END;
+$$ LANGUAGE plpgsql;
+
+--- DELETE FROM cliente WHERE cod_cliente = 8;
+
+--- SELECT * FROM pedido;
+--- SELECT * FROM cliente;
+
+--TAILA FOLLE
