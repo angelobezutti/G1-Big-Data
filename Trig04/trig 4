@@ -1,0 +1,19 @@
+CREATE OR REPLACE FUNCTION cria_ingresso() 
+RETURNS TRIGGER AS
+$BODY$
+BEGIN
+  UPDATE sessao
+     SET ingresso_disponivel = ingresso_disponivel + 1
+   WHERE cod_sessao = OLD.cod_sessao;
+  
+  RETURN OLD;
+END;
+$BODY$ LANGUAGE PLPGSQL;
+
+CREATE TRIGGER devolver_ingresso
+ AFTER DELETE
+    ON reservar
+   FOR EACH ROW
+EXECUTE PROCEDURE aumentar_ingresso();
+
+DELETE FROM reservar WHERE cod_reservar = 11
