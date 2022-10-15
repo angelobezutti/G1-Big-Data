@@ -15,7 +15,7 @@ BEGIN
 	 
 	 UPDATE sessao 
 	 SET ingressos_disponiveis = ingressos_disponiveis_atualizados
-	 WHERE cod_sessao = NEW.cod_sessao;
+	 WHERE cod_sessao = OLD.cod_sessao;
 	 
 	 RETURN NULL;
 
